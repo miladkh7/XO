@@ -7,17 +7,30 @@ const TicToc={
     playerMarks:['X','O'],
     currentPlayerIndex:0,
     currentPlayerMark:'X',
-    checkedFields:Array(9).fill(''),
+    gameSize:3,
+ 
     winStates: [
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [2,4,6]
       ],
+    CreateWinStates:function(num){
+      winState=[]
+      winState3=[]
+      winState4=[]
+      for(i=0;i<num;i++){
+          winState1=[]
+          winState2=[]
+          for(j=0;j<num;j++){
+              winState1.push(i*num+j)
+              winState2.push(j*num+i)
+          }
+          winState.push(winState1)
+          winState.push(winState2)
+          winState3.push(i*(num+1)) 
+          winState4.push((i+1)*(num-1))
+      }
+      winState.push(winState3)
+      winState.push(winState4)
+      this.winStates=winState
+    },
     CheckWin:function(value){
      
       result=false
@@ -37,8 +50,10 @@ const TicToc={
     CheckTie:function(){return this.checkedFields.every(val=>val!=='')},
     init:function(){
         // get fields empty
+
+        this.checkedFields=new Array(this.gameSize*this.gameSize).fill(''),
         this.checkedFields.fill('');
-        
+        this.CreateWinStates(this.gameSize)
         for(i=0;i<this.cells.length;i++) {
           this.cells[i].textContent='';
           this.cells[i].className="cell"
