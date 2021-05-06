@@ -1,7 +1,26 @@
-
+function tableCreate(num=4) {
+  const body = document.getElementsByTagName('body')[0];
+  const tableDiv = document.createElement('div');
+  tableDiv.className="boarGame"
+  const table = document.createElement('table');
+  table.className="board"
+  console.log(table)
+  for (let i = 0; i < num; i++) {
+    const tr = document.createElement('tr');
+    tr.className="row"
+    for (let j = 0; j < num; j++) {
+      const td = document.createElement('td');
+      td.className="cell"
+      tr.appendChild(td)
+    }
+    table.appendChild(tr);
+  }
+  tableDiv.appendChild(table);
+  body.appendChild(tableDiv)
+}
 const TicToc={
-    board:document.getElementsByClassName("board")[0],
-    cells:document.getElementsByClassName("cell"),
+    board:undefined,
+
     currentPlayer:document.getElementById("current"),
     playerColors:['red','yellow'],
     playerMarks:['X','O'],
@@ -31,6 +50,9 @@ const TicToc={
       winState.push(winState4)
       this.winStates=winState
     },
+    CreateBoard:function(e){
+      this.CreateBoard=e
+    },
     CheckWin:function(value){
      
       result=false
@@ -48,9 +70,11 @@ const TicToc={
       return result
     },
     CheckTie:function(){return this.checkedFields.every(val=>val!=='')},
-    init:function(){
+    init:function(size){
         // get fields empty
-
+        this.board=document.getElementsByClassName("board")[0]
+        this.cells=document.getElementsByClassName("cell")
+        this.gameSize=size
         this.checkedFields=new Array(this.gameSize*this.gameSize).fill(''),
         this.checkedFields.fill('');
         this.CreateWinStates(this.gameSize)
@@ -92,11 +116,11 @@ const TicToc={
       currentField.textContent = this.currentPlayerMark
       if(this.CheckWin(this.currentPlayerIndex)) {
         alert(this.currentPlayerMark + ' wons!');
-        this.init()
+        this.init(this.gameSize)
       }
       if(this.CheckTie()){
         alert(' Tie!');
-        this.init()
+        this.init(this.gameSize)
       }
 
       this.toggleTurn()
@@ -104,5 +128,6 @@ const TicToc={
     },
 
 }
-TicToc.init()
-
+gameSize=5
+tableCreate(gameSize)
+TicToc.init(gameSize)
