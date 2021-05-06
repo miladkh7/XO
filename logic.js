@@ -37,7 +37,11 @@ const TicToc={
     init:function(){
         // get fields empty
         this.checkedFields.fill('');
-        for(i=0;i<this.cells.length;i++)  this.cells[i].textContent='';
+        
+        for(i=0;i<this.cells.length;i++) {
+          this.cells[i].textContent='';
+          this.cells[i].className="cell"
+        } 
         console.log(this.board)
         this.board.addEventListener('click',(e)=>this.handleClick(e));
         this.toggleTurn()
