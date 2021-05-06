@@ -34,6 +34,7 @@ const TicToc={
       }
       return result
     },
+    CheckTie:function(){return this.checkedFields.every(val=>val!=='')},
     init:function(){
         // get fields empty
         this.checkedFields.fill('');
@@ -77,8 +78,12 @@ const TicToc={
       if(this.CheckWin(this.currentPlayerIndex)) {
         alert(this.currentPlayerMark + ' wons!');
         this.init()
-        
       }
+      if(this.CheckTie()){
+        alert(' Tie!');
+        this.init()
+      }
+
       this.toggleTurn()
       
     },
