@@ -1,0 +1,26 @@
+body{
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction:column;
+}
+.boardgame{
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+.board{
+    border-style: hidden;
+    border-collapse: collapse;
+    text-align:center; 
+    margin: 0px;
+}
+
+.cell{
+    border:3px solid gray;
+    align-items: center;
+    font-size: 100px;
+    width: 100px;
+    height: 100px;
+}
+
