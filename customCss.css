@@ -1,8 +1,14 @@
+@font-face {
+    font-family: 'Indie Flower';
+    src:url("./static/IndieFlower.woff2")
+    /* src: url(https://fonts.gstatic.com/s/indieflower/v12/m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2) format('woff2'); */
+    }
 body{
     align-items: center;
     align-content: center;
     display: flex;
     flex-direction:column;
+    font-family: 'Indie Flower', cursive;
 }
 .boardgame{
     padding: 30px;
@@ -19,8 +25,25 @@ body{
 .cell{
     border:3px solid gray;
     align-items: center;
-    font-size: 100px;
-    width: 100px;
-    height: 100px;
+    font-size: 80px;
+    width: 150px;
+    height: 150px;
 }
 
+.red{
+    color:red;
+}
+
+.yellow{
+    color:yellow;
+}
+.green{
+    color:green;
+}
+.greenyellow{
+    color: greenyellow;
+}
+
+#current{
+    font-size: 30px;
+}
