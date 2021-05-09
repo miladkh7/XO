@@ -97,23 +97,23 @@ const TicToc={
       this.currentPlayerMark= this.playerMarks[this.currentPlayerIndex]
       this.currentPlayer.textContent=this.currentPlayerMark
       this.currentPlayer.classList.add(this.playerColors[this.currentPlayerIndex])
+
     },
     changePlayerColor:function(currentField){
      currentField.classList.add(this.playerColors[this.currentPlayerIndex])
 
     },
     handleClick:function(e){
-      // find cell index
-      //i=e.target.cellIndex
-      //j=e.target.parentElement.rowIndex
-
-      var currentField = e.target
-      var currentFieldNumber = Array.prototype.indexOf.call(this.cells,currentField);
-      if (currentField.textContent) return
-      this.changePlayerColor(currentField)
-      this.checkedFields[currentFieldNumber] =this.currentPlayerIndex
+      var currentFieldNumber = Array.prototype.indexOf.call(this.cells,e.target);
+      this.ApplyMovement(currentFieldNumber)
+    },
+    ApplyMovement:function(cellNumber){
+      cellItem=this.cells[cellNumber]
+      if (cellItem.textContent) return
+      this.changePlayerColor(cellItem)
+      this.checkedFields[cellNumber] =this.currentPlayerIndex
       console.log(this.checkedFields)
-      currentField.textContent = this.currentPlayerMark
+      cellItem.textContent = this.currentPlayerMark
       if(this.CheckWin(this.currentPlayerIndex)) {
         alert(this.currentPlayerMark + ' wons!');
         this.init(this.gameSize)
@@ -124,8 +124,8 @@ const TicToc={
       }
 
       this.toggleTurn()
-      
-    },
+
+    }
 
 }
 gameSize=5
