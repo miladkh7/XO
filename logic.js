@@ -97,6 +97,16 @@ const TicToc={
       this.currentPlayerMark= this.playerMarks[this.currentPlayerIndex]
       this.currentPlayer.textContent=this.currentPlayerMark
       this.currentPlayer.classList.add(this.playerColors[this.currentPlayerIndex])
+     
+     // check is computer turn
+      if (this.currentPlayerIndex==1){
+        console.log('computer turn')
+        availableCells=this.checkedFields.map((e,i) => e ==='' ? i : undefined).filter(x => x) 
+        let randomSelect = availableCells[Math.floor(Math.random() * availableCells.length)]
+        this.ApplyMovement(randomSelect,this.cells[randomSelect])
+      }
+    
+
 
     },
     changePlayerColor:function(currentField){
