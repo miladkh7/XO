@@ -84,7 +84,7 @@ const TicToc={
         } 
         console.log(this.board)
         this.board.addEventListener('click',(e)=>this.handleClick(e));
-        this.toggleTurn()
+        // this.toggleTurn()
     },
     toggleTurn:function(){
 
@@ -127,10 +127,12 @@ const TicToc={
       if(this.CheckWin(this.currentPlayerIndex)) {
         alert(this.currentPlayerMark + ' wons!');
         this.init(this.gameSize)
+        return
       }
       if(this.CheckTie()){
         alert(' Tie!');
         this.init(this.gameSize)
+        return
       }
 
       this.toggleTurn()
