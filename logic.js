@@ -48,7 +48,7 @@ const TicToc={
       }
       winState.push(winState3)
       winState.push(winState4)
-      this.winStates=winState
+      return winState
     },
     CreateBoard:function(e){
       this.CreateBoard=e
@@ -77,7 +77,7 @@ const TicToc={
         this.gameSize=size
         this.checkedFields=new Array(this.gameSize*this.gameSize).fill(''),
         this.checkedFields.fill('');
-        this.CreateWinStates(this.gameSize)
+        this.winStates=this.CreateWinStates(this.gameSize)
         for(i=0;i<this.cells.length;i++) {
           this.cells[i].textContent='';
           this.cells[i].className="cell"
@@ -101,11 +101,11 @@ const TicToc={
      // check is computer turn
       if (this.currentPlayerIndex==1){
         console.log('computer turn')
-        availableCells=this.checkedFields.map((e,i) => e ==='' ? i : undefined).filter(x => x) 
-        let randomSelect = availableCells[Math.floor(Math.random() * availableCells.length)]
-        this.ApplyMovement(randomSelect,this.cells[randomSelect])
+        moveSuggest=SuggestMove(this.checkedFields,this.currentPlayerIndex)
+      
+       
+        this.ApplyMovement(moveSuggest,this.cells[moveSuggest])
       }
-    
 
 
     },
@@ -137,9 +137,13 @@ const TicToc={
 
       this.toggleTurn()
 
+    },
+    test:function(){
+      console.log('this is test',board)
     }
 
 }
-gameSize=5
+
+gameSize=3
 tableCreate(gameSize)
 TicToc.init(gameSize)
