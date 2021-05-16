@@ -54,8 +54,8 @@ const TicToc={
       this.CreateBoard=e
     },
     CheckWin:function(value, board=this.checkedFields, winStates=this.winStates){
-     
       result=false
+      
       for(winState of winStates){
         newArray=[]
 
@@ -66,7 +66,7 @@ const TicToc={
         if(result) break
         
       }
-      return result
+      return [result,value]
     },
     CheckTie:function(){return this.checkedFields.every(val=>val!=='')},
     init:function(size){
@@ -123,7 +123,9 @@ const TicToc={
       this.checkedFields[cellNumber] =this.currentPlayerIndex
       console.log(this.checkedFields)
       cellItem.textContent = this.currentPlayerMark
-      if(this.CheckWin(this.currentPlayerIndex)) {
+      //ToDo:use player as class and 
+      let [someOneWin,winner]=this.CheckWin(this.currentPlayerIndex)
+      if(someOneWin) {
         alert(this.currentPlayerMark + ' wons!');
         this.init(this.gameSize)
         return
@@ -137,9 +139,7 @@ const TicToc={
       this.toggleTurn()
 
     },
-    test:function(){
-      console.log('this is test',board)
-    }
+
 
 }
 
