@@ -53,16 +53,15 @@ const TicToc={
     CreateBoard:function(e){
       this.CreateBoard=e
     },
-    CheckWin:function(value){
+    CheckWin:function(value, board=this.checkedFields, winStates=this.winStates){
      
       result=false
-      for(winState of this.winStates){
+      for(winState of winStates){
         newArray=[]
+
         for(index of winState){
-     
-            newArray.push(this.checkedFields[index])
+            newArray.push(board[index])
         }
-        
         result=newArray.every(val=>val===value)
         if(result) break
         
