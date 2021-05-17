@@ -48,26 +48,25 @@ const TicToc={
       }
       winState.push(winState3)
       winState.push(winState4)
-      this.winStates=winState
+      return winState
     },
     CreateBoard:function(e){
       this.CreateBoard=e
     },
-    CheckWin:function(value){
-     
+    CheckWin:function(value, board=this.checkedFields, winStates=this.winStates){
       result=false
-      for(winState of this.winStates){
+      
+      for(winState of winStates){
         newArray=[]
+
         for(index of winState){
-     
-            newArray.push(this.checkedFields[index])
+            newArray.push(board[index])
         }
-        
         result=newArray.every(val=>val===value)
         if(result) break
         
       }
-      return result
+      return [result,value]
     },
     CheckTie:function(){return this.checkedFields.every(val=>val!=='')},
     init:function(size){
@@ -77,14 +76,14 @@ const TicToc={
         this.gameSize=size
         this.checkedFields=new Array(this.gameSize*this.gameSize).fill(''),
         this.checkedFields.fill('');
-        this.CreateWinStates(this.gameSize)
+        this.winStates=this.CreateWinStates(this.gameSize)
         for(i=0;i<this.cells.length;i++) {
           this.cells[i].textContent='';
           this.cells[i].className="cell"
         } 
-        console.log(this.board)
+        // console.log(this.board)
         this.board.addEventListener('click',(e)=>this.handleClick(e));
-        this.toggleTurn()
+        // this.toggleTurn()
     },
     toggleTurn:function(){
 
@@ -97,37 +96,59 @@ const TicToc={
       this.currentPlayerMark= this.playerMarks[this.currentPlayerIndex]
       this.currentPlayer.textContent=this.currentPlayerMark
       this.currentPlayer.classList.add(this.playerColors[this.currentPlayerIndex])
+     
+     // check is computer turn
+      if (this.currentPlayerIndex==1){
+        console.log('computer turn')
+        moveSuggest=SuggestMove(this.checkedFields,this.currentPlayerIndex)
+      
+       
+        this.ApplyMovement(moveSuggest,this.cells[moveSuggest])
+      }
+
+
     },
     changePlayerColor:function(currentField){
      currentField.classList.add(this.playerColors[this.currentPlayerIndex])
 
     },
     handleClick:function(e){
-      // find cell index
-      //i=e.target.cellIndex
-      //j=e.target.parentElement.rowIndex
-
-      var currentField = e.target
-      var currentFieldNumber = Array.prototype.indexOf.call(this.cells,currentField);
-      if (currentField.textContent) return
-      this.changePlayerColor(currentField)
-      this.checkedFields[currentFieldNumber] =this.currentPlayerIndex
+      var currentFieldNumber = Array.prototype.indexOf.call(this.cells,e.target);
+      this.ApplyMovement(currentFieldNumber)
+    },
+    ApplyMovement:function(cellNumber){
+      cellItem=this.cells[cellNumber]
+      if (cellItem.textContent) return
+      this.changePlayerColor(cellItem)
+      this.checkedFields[cellNumber] =this.currentPlayerIndex
       console.log(this.checkedFields)
-      currentField.textContent = this.currentPlayerMark
-      if(this.CheckWin(this.currentPlayerIndex)) {
-        alert(this.currentPlayerMark + ' wons!');
+      cellItem.textContent = this.currentPlayerMark
+      //ToDo:use player as class and 
+      let [someOneWin,winner]=this.CheckWin(this.currentPlayerIndex)
+      if(someOneWin) {
+        
+        //#FixMe:It is possible to clear the screen before the end of the game
+        setTimeout(()=> {
+          alert(this.currentPlayerMark + ' wons!');
+
+        },10)
         this.init(this.gameSize)
+        return
+
       }
       if(this.CheckTie()){
         alert(' Tie!');
         this.init(this.gameSize)
+        return
       }
 
       this.toggleTurn()
-      
+
     },
 
+
 }
-gameSize=5
+
+gameSize=3
 tableCreate(gameSize)
 TicToc.init(gameSize)
