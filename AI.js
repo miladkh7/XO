@@ -1,24 +1,29 @@
 
 
 function SuggestMove(board,playerIndex){
-    BestMove(board,playerIndex)
- return RandomMove(board)
+    bestComputerMove=BestMove(board,playerIndex)
+    console.log('b',bestComputerMove)
+ return bestComputerMove
+//  return RandomMove(board)
+
 }
+
 function BestMove(board,turnIndex){
     let bestMove
     let bestScore=-Infinity
-    console.log('in best move')
+
     board.map((e,i)=>{
         // console.log(e,i)
-        score=0
-        if (e!==''){
+        if (e===''){
+
             board[i]=turnIndex
-            console.log('this is my board1',board)
-            // let score=MinMax(board,0,0)
+            let score=MinMax(board,0,false,1)
+            // console.log(score)
             board[i]=''
-            console.log('this is my board2',board)
             if(score>bestScore){
+                bestScore=score
                 bestMove=i
+                console.log('beset move ',i)
             }
         }
 
@@ -32,33 +37,52 @@ function RandomMove(board){
     return randomSelect
 }
 
-function MinMax(board,depth,isMax){
-    console.log('we are in min max ')
-    TicToc.test()
-    let winner=null// check who whin
-    if (!winner){
-        return true
+function MinMax(board,depth,isMax,turnIndex){
+    let score=0
+    if(TicToc.CheckTie(board))return score
+    let [someOneWin,winner]=TicToc.CheckWin(turnIndex,board)
+    if (someOneWin){
+        score=winner==1?+1:-1
+        return score
     }
 
-    if (isMax){
-        //best=-infinity
-        //mark each cell
-        // run min max and calculate
-        //let score =minmax(board,depht+1,false) 
-        //unmark cell
-        //best =max(score,best score)
-        //return best score
+    if(isMax){
+        let bestScore=-Infinity
+        board.map((e,i)=>{
+      
+            if (e===''){
+                board[i]=1
+                let score=MinMax(board,depth+1,false,1)
+                board[i]=''
+                // bestScore=Math.max([score,bestScore])
+                if(score>bestScore){
+                    bestScore=score
+                }
+                
+            }
+        })
+        return bestScore
     }
     else{
-        //best=infinity
-        //mark each cell
-        // run min max and calculate
-        //let score =minmax(board,depht+1,true) 
-        //unmark cell
-        //best =min(score,best score)
-        //return best score
-
+        // temp for test
+        turnIndex2=0
+        let bestScore=Infinity
+        board.map((e,i)=>{
+            if (e===''){
+                board[i]=turnIndex2
+                let score=MinMax(board,depth+1,true,turnIndex2)
+                board[i]=''
+                // bestScore=Math.min([score,bestScore])
+                
+                if(score<bestScore){
+                    bestScore=score
+                }
+                
+            }
+        })
+        return bestScore
     }
-    return 1
     
 }
+
+
