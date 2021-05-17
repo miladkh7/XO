@@ -81,7 +81,7 @@ const TicToc={
           this.cells[i].textContent='';
           this.cells[i].className="cell"
         } 
-        console.log(this.board)
+        // console.log(this.board)
         this.board.addEventListener('click',(e)=>this.handleClick(e));
         // this.toggleTurn()
     },
@@ -126,9 +126,15 @@ const TicToc={
       //ToDo:use player as class and 
       let [someOneWin,winner]=this.CheckWin(this.currentPlayerIndex)
       if(someOneWin) {
-        alert(this.currentPlayerMark + ' wons!');
+        
+        //#FixMe:It is possible to clear the screen before the end of the game
+        setTimeout(()=> {
+          alert(this.currentPlayerMark + ' wons!');
+
+        },10)
         this.init(this.gameSize)
         return
+
       }
       if(this.CheckTie()){
         alert(' Tie!');
