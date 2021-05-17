@@ -68,7 +68,7 @@ const TicToc={
       }
       return [result,value]
     },
-    CheckTie:function(){return this.checkedFields.every(val=>val!=='')},
+    CheckTie:function(board=this.checkedFields){return board.every(val=>val!=='')},
     init:function(size){
         // get fields empty
         this.board=document.getElementsByClassName("board")[0]
