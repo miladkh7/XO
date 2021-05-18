@@ -148,7 +148,18 @@ const TicToc={
 
 
 }
-
 gameSize=3
 tableCreate(gameSize)
-TicToc.init(gameSize)
+const setup=()=>{
+  document.getElementsByClassName("players")[0].style.display = "none";
+  document.getElementById("current-player-info").style.display ="block";
+  
+ 
+ 
+  TicToc.init(gameSize)
+}
+const reset=()=>{
+  document.getElementsByClassName("players")[0].style.display = "block ";
+  document.getElementById("current-player-info").style.display ="none";
+
+}
