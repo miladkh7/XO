@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,37 @@
     <!-- <script src="logic.js"></script> -->
     <title>My Tic-Toe</title>
 </head>
+
 <body>
     <div class="content">
         <h1>Excercie 1</h1>
         <p>classic tic-toe game </p>
+        <div class="player">
+            <div class="player-info">
+                <label for="player1">Player1 Name</label>
+                <input id="player1" type="text" value="Milad" placeholder="Player1">
+
+            </div>
+            <div class="player-info">
+                <label for="player2">Player2 Name</label>
+                <input id="player2" type="text" value="Sheykhbahaii" placeholder="player2">
+
+                <label for="bot">is bot</label>
+                <input type="checkbox" name="isBot" id="bot">
+
+            </div>
+            <div class="gameplay">
+                <input type="button" value="Start">
+                <input type="button" value="Restart">
+            </div>
+
+
+        </div>
         <p class="current">current Player: <span id="current"></span></p>
+
     </div>
-   <script src="AI.js"></script>
-   <script src="logic.js"></script>
+    <script src="AI.js"></script>
+    <script src="logic.js"></script>
 </body>
 
 <style>

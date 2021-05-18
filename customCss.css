@@ -43,7 +43,21 @@ body{
 .greenyellow{
     color: greenyellow;
 }
-
+.player{
+    visibility: visible;
+}
+.player-info{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.gameplay{
+    justify-content: center;
+    text-align: center;
+}
+.current{
+    visibility: hidden;
+}
 #current{
+    
     font-size: 30px;
 }
