@@ -32,6 +32,8 @@ function tableCreate(num=4) {
 }
 const TicToc={
     board:undefined,
+    players:[],
+    gameState:false,
     currentPlayer:document.getElementById("current"),
     playerColors:['red','yellow'],
     playerMarks:['X','O'],
@@ -80,7 +82,9 @@ const TicToc={
       return [result,value]
     },
     CheckTie:function(board=this.checkedFields){return board.every(val=>val!=='')},
-    init:function(size){
+    init:function(size,players){
+      this.players=players
+      this.players[0].ShowDetail()
         // get fields empty
         this.board=document.getElementsByClassName("board")[0]
         this.cells=document.getElementsByClassName("cell")
@@ -124,6 +128,7 @@ const TicToc={
 
     },
     handleClick:function(e){
+      if (!this.gameState) return
       var currentFieldNumber = Array.prototype.indexOf.call(this.cells,e.target);
       this.ApplyMovement(currentFieldNumber)
     },
@@ -156,6 +161,13 @@ const TicToc={
       this.toggleTurn()
 
     },
+    Puase:function(){
+      this.gameState=false
+    },
+    Start:function(){
+      this.gameState=true
+    }
+  
 
 
 }
@@ -170,12 +182,14 @@ const setup=()=>{
   player2.isBot=document.getElementById("bot").checked
   document.getElementsByClassName("players")[0].style.display = "none";
   document.getElementById("current-player-info").style.display ="block";
+  TicToc.gameState=true
   
+  players=[player1,player2]
  
- 
-  TicToc.init(gameSize)
+  TicToc.init(gameSize,players)
 }
 const reset=()=>{
+  
   document.getElementsByClassName("players")[0].style.display = "block ";
   document.getElementById("current-player-info").style.display ="none";
 
