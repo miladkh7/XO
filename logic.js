@@ -1,3 +1,15 @@
+class player{
+ 
+  constructor(playerName,color,symbol,IsBot=true){
+    this.name=playerName
+    this.color=color
+    this.symbol=symbol
+    this.isBot=IsBot
+  }
+ ShowDetail(){
+  console.log(`playerName:${this.name} color:${this.color} symbol:${this.symbol} is bot:${this.isBot}`)
+}
+}
 function tableCreate(num=4) {
  
   const tableDiv = document.createElement('div');
@@ -20,7 +32,6 @@ function tableCreate(num=4) {
 }
 const TicToc={
     board:undefined,
-
     currentPlayer:document.getElementById("current"),
     playerColors:['red','yellow'],
     playerMarks:['X','O'],
@@ -151,6 +162,12 @@ const TicToc={
 gameSize=3
 tableCreate(gameSize)
 const setup=()=>{
+
+  let player1=new player("","Red","X")
+  let player2=new player("","Yellow","O",false)
+  player1.name=document.getElementById("player1").value
+  player2.name=document.getElementById("player2").value
+  player2.isBot=document.getElementById("bot").checked
   document.getElementsByClassName("players")[0].style.display = "none";
   document.getElementById("current-player-info").style.display ="block";
   
