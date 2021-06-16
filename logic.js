@@ -1,5 +1,5 @@
 function tableCreate(num=4) {
-  const body = document.getElementsByTagName('body')[0];
+ 
   const tableDiv = document.createElement('div');
   tableDiv.className="boarGame"
   const table = document.createElement('table');
@@ -16,7 +16,7 @@ function tableCreate(num=4) {
     table.appendChild(tr);
   }
   tableDiv.appendChild(table);
-  body.appendChild(tableDiv)
+  document.body.appendChild(tableDiv)
 }
 const TicToc={
     board:undefined,
