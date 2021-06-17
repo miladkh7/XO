@@ -1,6 +1,6 @@
 class player{
  
-  constructor(playerName,color,symbol,IsBot=true){
+  constructor(playerName,color,symbol,IsBot=false){
     this.name=playerName
     this.color=color
     this.symbol=symbol
@@ -113,7 +113,7 @@ const TicToc={
 
      
      // check is computer turn
-      if (this.currentPlayerIndex==1){
+      if (this.currentPlayer.isBot){
         // console.log('computer turn')
         moveSuggest=SuggestMove(this.checkedFields,this.currentPlayerIndex)
 
