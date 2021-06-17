@@ -182,7 +182,7 @@ const setup=()=>{
   player2.isBot=document.getElementById("bot").checked
   document.getElementsByClassName("players")[0].style.display = "none";
   document.getElementById("current-player-info").style.display ="block";
-  TicToc.gameState=true
+  TicToc.Start()
   
   players=[player1,player2]
  
