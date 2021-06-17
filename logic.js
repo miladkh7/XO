@@ -16,7 +16,6 @@ function tableCreate(num=4) {
   tableDiv.className="boarGame"
   const table = document.createElement('table');
   table.className="board"
-  console.log(table)
   for (let i = 0; i < num; i++) {
     const tr = document.createElement('tr');
     tr.className="row"
@@ -34,11 +33,9 @@ const TicToc={
     board:undefined,
     players:[],
     gameState:false,
-    currentPlayer:document.getElementById("current"),
-    playerColors:['red','yellow'],
-    playerMarks:['X','O'],
+    currentPlayer:null,
+    currentPlayerCaption:document.getElementById("current"),
     currentPlayerIndex:0,
-    currentPlayerMark:'X',
     gameSize:3,
  
     winStates: [
@@ -84,7 +81,7 @@ const TicToc={
     CheckTie:function(board=this.checkedFields){return board.every(val=>val!=='')},
     init:function(size,players){
       this.players=players
-      this.players[0].ShowDetail()
+      this.currentPlayer=players[0]
         // get fields empty
         this.board=document.getElementsByClassName("board")[0]
         this.cells=document.getElementsByClassName("cell")
@@ -102,29 +99,31 @@ const TicToc={
     },
     toggleTurn:function(){
 
-      this.currentPlayer.classList.remove(this.playerColors[this.currentPlayerIndex])
+      this.currentPlayer.ShowDetail()
+      this.currentPlayerCaption.classList.remove(this.currentPlayer.color)
+
 
       this.currentPlayerIndex= this.currentPlayerIndex === 1 ? 0 : 1;
-      //:D
-      // this.currentPlayerIndex=Math.abs(1-this.currentPlayerIndex)
-     
-      this.currentPlayerMark= this.playerMarks[this.currentPlayerIndex]
-      this.currentPlayer.textContent=this.currentPlayerMark
-      this.currentPlayer.classList.add(this.playerColors[this.currentPlayerIndex])
+      this.currentPlayer=players[this.currentPlayerIndex]
+
+      this.currentPlayerCaption.textContent=this.currentPlayer.symbol
+      
+
+      this.currentPlayerCaption.classList.add(this.currentPlayer.color)
+
      
      // check is computer turn
       if (this.currentPlayerIndex==1){
-        console.log('computer turn')
+        // console.log('computer turn')
         moveSuggest=SuggestMove(this.checkedFields,this.currentPlayerIndex)
-      
-       
+
         this.ApplyMovement(moveSuggest,this.cells[moveSuggest])
       }
 
 
     },
     changePlayerColor:function(currentField){
-     currentField.classList.add(this.playerColors[this.currentPlayerIndex])
+     currentField.classList.add(this.currentPlayer.color)
 
     },
     handleClick:function(e){
@@ -137,16 +136,17 @@ const TicToc={
       if (cellItem.textContent) return
       this.changePlayerColor(cellItem)
       this.checkedFields[cellNumber] =this.currentPlayerIndex
-      console.log(this.checkedFields)
-      cellItem.textContent = this.currentPlayerMark
+      cellItem.textContent = this.currentPlayer.symbol
       //ToDo:use player as class and 
       let [someOneWin,winner]=this.CheckWin(this.currentPlayerIndex)
       if(someOneWin) {
         
         //#FixMe:It is possible to clear the screen before the end of the game
         setTimeout(()=> {
-          alert(this.currentPlayerMark + ' wons!');
-          this.init(this.gameSize)
+          alert(this.currentPlayer.symbol + ' wons!');
+          TicToc.Puase
+          players=CreatePlayers()
+          this.init(this.gameSize,players)
           return
   
         },100)
@@ -173,18 +173,23 @@ const TicToc={
 }
 gameSize=3
 tableCreate(gameSize)
-const setup=()=>{
-
-  let player1=new player("","Red","X")
-  let player2=new player("","Yellow","O",false)
+const CreatePlayers=()=>{
+  let player1=new player("","red","X")
+  let player2=new player("","yellow","O",false)
   player1.name=document.getElementById("player1").value
   player2.name=document.getElementById("player2").value
   player2.isBot=document.getElementById("bot").checked
+  players=[player1,player2]
+  return players
+}
+const setup=()=>{
+
+
   document.getElementsByClassName("players")[0].style.display = "none";
   document.getElementById("current-player-info").style.display ="block";
   TicToc.Start()
   
-  players=[player1,player2]
+  players=CreatePlayers()
  
   TicToc.init(gameSize,players)
 }
