@@ -76,7 +76,7 @@ const TicToc={
         if(result) break
         
       }
-      return [result,value]
+      return [result,this.players[value]]
     },
     CheckTie:function(board=this.checkedFields){return board.every(val=>val!=='')},
     init:function(size,players){
@@ -143,7 +143,8 @@ const TicToc={
         
         //#FixMe:It is possible to clear the screen before the end of the game
         setTimeout(()=> {
-          alert(this.currentPlayer.symbol + ' wons!');
+          this.currentPlayer.ShowDetail()
+          alert(`${winner.name}(${winner.symbol})  wons!`);
           TicToc.Puase
           players=CreatePlayers()
           this.init(this.gameSize,players)
@@ -154,6 +155,7 @@ const TicToc={
       }
       if(this.CheckTie()){
         alert(' Tie!');
+        this.gameSize.Puase
         this.init(this.gameSize)
         return
       }
