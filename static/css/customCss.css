@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Indie Flower';
-    src:url("./static/IndieFlower.woff2")
+    src:url("../IndieFlower.woff2")
     /* src: url(https://fonts.gstatic.com/s/indieflower/v12/m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2) format('woff2'); */
     }
 body{
