@@ -97,20 +97,24 @@ const TicToc={
         this.board.addEventListener('click',(e)=>this.handleClick(e));
         // this.toggleTurn()
     },
+    updateCurrentPlayerName:function(){
+     
+      this.currentPlayerCaption.textContent=`${this.currentPlayer.name}    (${this.currentPlayer.symbol})`
+
+      console.log(this.currentPlayer)
+    this.currentPlayerCaption.classList=this.currentPlayer.color
+
+    },
     toggleTurn:function(){
 
       this.currentPlayer.ShowDetail()
-      this.currentPlayerCaption.classList.remove(this.currentPlayer.color)
-
-
       this.currentPlayerIndex= this.currentPlayerIndex === 1 ? 0 : 1;
       this.currentPlayer=players[this.currentPlayerIndex]
+      this.updateCurrentPlayerName()
 
-      this.currentPlayerCaption.textContent=`${this.currentPlayer.name}    (${this.currentPlayer.symbol})`
       
 
-      this.currentPlayerCaption.classList.add(this.currentPlayer.color)
-
+     
      
      // check is computer turn
       if (this.currentPlayer.isBot){
@@ -189,11 +193,13 @@ const setup=()=>{
 
   document.getElementsByClassName("players")[0].style.display = "none";
   document.getElementById("current-player-info").style.display ="block";
+  
   TicToc.Start()
   
   players=CreatePlayers()
- 
+  
   TicToc.init(gameSize,players)
+  TicToc.updateCurrentPlayerName()
 }
 const reset=()=>{
   TicToc.Puase()
