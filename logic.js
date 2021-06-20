@@ -216,8 +216,9 @@ const setup=()=>{
  
 }
 const  reset=()=>{
-
-  // document.getElementById("btn-start").value="Finish"
+  TicToc.Start()
+  TicToc.init(gameSize,players)
+  TicToc.updateCurrentPlayerName()
   
 
 }
