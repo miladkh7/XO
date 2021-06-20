@@ -106,7 +106,7 @@ const TicToc={
       this.currentPlayerIndex= this.currentPlayerIndex === 1 ? 0 : 1;
       this.currentPlayer=players[this.currentPlayerIndex]
 
-      this.currentPlayerCaption.textContent=this.currentPlayer.symbol
+      this.currentPlayerCaption.textContent=`${this.currentPlayer.name}    (${this.currentPlayer.symbol})`
       
 
       this.currentPlayerCaption.classList.add(this.currentPlayer.color)
@@ -176,7 +176,7 @@ const TicToc={
 gameSize=3
 tableCreate(gameSize)
 const CreatePlayers=()=>{
-  let player1=new player("","red","X")
+  let player1=new player("","green","X")
   let player2=new player("","yellow","O",false)
   player1.name=document.getElementById("player1").value
   player2.name=document.getElementById("player2").value
@@ -196,8 +196,9 @@ const setup=()=>{
   TicToc.init(gameSize,players)
 }
 const reset=()=>{
-  
+  TicToc.Puase()
   document.getElementsByClassName("players")[0].style.display = "block ";
   document.getElementById("current-player-info").style.display ="none";
+  
 
 }
