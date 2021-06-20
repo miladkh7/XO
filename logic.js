@@ -94,6 +94,7 @@ const TicToc={
           this.cells[i].className="cell"
         } 
         // console.log(this.board)
+        
         this.board.addEventListener('click',(e)=>this.handleClick(e));
         // this.toggleTurn()
     },
@@ -190,21 +191,33 @@ const CreatePlayers=()=>{
 }
 const setup=()=>{
 
+  if (TicToc.gameState){
 
-  document.getElementsByClassName("players")[0].style.display = "none";
-  document.getElementById("current-player-info").style.display ="block";
-  
-  TicToc.Start()
-  
-  players=CreatePlayers()
-  
-  TicToc.init(gameSize,players)
-  TicToc.updateCurrentPlayerName()
+    TicToc.Puase()
+    document.getElementsByClassName("players")[0].style.display = "block ";
+    document.getElementById("current-player-info").style.display ="none";
+    document.getElementById("btn-start").value="Start"
+
+
+  }
+  else{
+    document.getElementsByClassName("players")[0].style.display = "none";
+    document.getElementById("current-player-info").style.display ="block";
+    document.getElementById("btn-start").value="Finish"
+    
+    
+    TicToc.Start()
+    
+    players=CreatePlayers()
+    
+    TicToc.init(gameSize,players)
+    TicToc.updateCurrentPlayerName()
+  }
+ 
 }
-const reset=()=>{
-  TicToc.Puase()
-  document.getElementsByClassName("players")[0].style.display = "block ";
-  document.getElementById("current-player-info").style.display ="none";
+const  reset=()=>{
+
+  // document.getElementById("btn-start").value="Finish"
   
 
 }
