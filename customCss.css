@@ -10,6 +10,12 @@ body{
     flex-direction:column;
     font-family: 'Indie Flower', cursive;
 }
+.content{
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction:column;
+}
 .boardgame{
     padding: 30px;
     display: flex;
@@ -55,9 +61,14 @@ body{
     text-align: center;
 }
 .current{
-    visibility: hidden;
+    /* visibility: hidden; */
+    font-size: 14px;
 }
 #current{
     
     font-size: 30px;
+}
+.p{
+    justify-content: center;
+
 }
