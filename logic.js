@@ -162,7 +162,7 @@ const TicToc={
       else if(this.CheckTie()){
         alert(' Tie!');
         this.gameSize.Puase
-        this.init(this.gameSize)
+        this.init(this.gameSize,players)
         return
       }
 
