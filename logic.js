@@ -97,7 +97,7 @@ const TicToc={
         // console.log(this.board)
         
         this.board.addEventListener('click',(e)=>this.handleClick(e));
-        // this.toggleTurn()
+        this.toggleTurn()
     },
     updateCurrentPlayerName:function(){
      
