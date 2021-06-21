@@ -76,7 +76,7 @@ const TicToc={
         if(result) break
         
       }
-      return [result,this.players[value]]
+      return [result,value]
     },
     CheckTie:function(board=this.checkedFields){return board.every(val=>val!=='')},
     init:function(size,players){
@@ -144,9 +144,9 @@ const TicToc={
       this.checkedFields[cellNumber] =this.currentPlayerIndex
       cellItem.textContent = this.currentPlayer.symbol
       //ToDo:use player as class and 
-      let [someOneWin,winner]=this.CheckWin(this.currentPlayerIndex)
+      let [someOneWin,winnerIndex]=this.CheckWin(this.currentPlayerIndex)
       if(someOneWin) {
-        
+        winner=this.players[winnerIndex]
         //#FixMe:It is possible to clear the screen before the end of the game
         setTimeout(()=> {
           this.currentPlayer.ShowDetail()
@@ -159,7 +159,7 @@ const TicToc={
         },100)
 
       }
-      if(this.CheckTie()){
+      else if(this.CheckTie()){
         alert(' Tie!');
         this.gameSize.Puase
         this.init(this.gameSize)
