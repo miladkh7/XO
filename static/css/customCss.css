@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Indie Flower';
-    src:url("./static/IndieFlower.woff2")
+    src:url("../IndieFlower.woff2")
     /* src: url(https://fonts.gstatic.com/s/indieflower/v12/m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2) format('woff2'); */
     }
 body{
@@ -9,6 +9,12 @@ body{
     display: flex;
     flex-direction:column;
     font-family: 'Indie Flower', cursive;
+}
+.content{
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction:column;
 }
 .boardgame{
     padding: 30px;
@@ -55,9 +61,14 @@ body{
     text-align: center;
 }
 .current{
-    visibility: hidden;
+    /* visibility: hidden; */
+    font-size: 14px;
 }
 #current{
     
     font-size: 30px;
+}
+.p{
+    justify-content: center;
+
 }

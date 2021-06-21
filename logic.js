@@ -1,10 +1,21 @@
+class player{
+ 
+  constructor(playerName,color,symbol,IsBot=false){
+    this.name=playerName
+    this.color=color
+    this.symbol=symbol
+    this.isBot=IsBot
+  }
+ ShowDetail(){
+  console.log(`playerName:${this.name} color:${this.color} symbol:${this.symbol} is bot:${this.isBot}`)
+}
+}
 function tableCreate(num=4) {
  
   const tableDiv = document.createElement('div');
   tableDiv.className="boarGame"
   const table = document.createElement('table');
   table.className="board"
-  console.log(table)
   for (let i = 0; i < num; i++) {
     const tr = document.createElement('tr');
     tr.className="row"
@@ -20,12 +31,11 @@ function tableCreate(num=4) {
 }
 const TicToc={
     board:undefined,
-
-    currentPlayer:document.getElementById("current"),
-    playerColors:['red','yellow'],
-    playerMarks:['X','O'],
+    players:[],
+    gameState:false,
+    currentPlayer:null,
+    currentPlayerCaption:document.getElementById("current"),
     currentPlayerIndex:0,
-    currentPlayerMark:'X',
     gameSize:3,
  
     winStates: [
@@ -69,7 +79,10 @@ const TicToc={
       return [result,value]
     },
     CheckTie:function(board=this.checkedFields){return board.every(val=>val!=='')},
-    init:function(size){
+    init:function(size,players){
+      this.players=players
+      this.currentPlayerIndex=randomTurn()
+      this.currentPlayer=players[this.currentPlayerIndex]
         // get fields empty
         this.board=document.getElementsByClassName("board")[0]
         this.cells=document.getElementsByClassName("cell")
@@ -82,37 +95,45 @@ const TicToc={
           this.cells[i].className="cell"
         } 
         // console.log(this.board)
+        
         this.board.addEventListener('click',(e)=>this.handleClick(e));
         // this.toggleTurn()
     },
+    updateCurrentPlayerName:function(){
+     
+      this.currentPlayerCaption.textContent=`${this.currentPlayer.name}    (${this.currentPlayer.symbol})`
+
+      console.log(this.currentPlayer)
+    this.currentPlayerCaption.classList=this.currentPlayer.color
+
+    },
     toggleTurn:function(){
 
-      this.currentPlayer.classList.remove(this.playerColors[this.currentPlayerIndex])
-
+      this.currentPlayer.ShowDetail()
       this.currentPlayerIndex= this.currentPlayerIndex === 1 ? 0 : 1;
-      //:D
-      // this.currentPlayerIndex=Math.abs(1-this.currentPlayerIndex)
+      this.currentPlayer=players[this.currentPlayerIndex]
+      this.updateCurrentPlayerName()
+
+      
+
      
-      this.currentPlayerMark= this.playerMarks[this.currentPlayerIndex]
-      this.currentPlayer.textContent=this.currentPlayerMark
-      this.currentPlayer.classList.add(this.playerColors[this.currentPlayerIndex])
      
      // check is computer turn
-      if (this.currentPlayerIndex==1){
-        console.log('computer turn')
+      if (this.currentPlayer.isBot){
+        // console.log('computer turn')
         moveSuggest=SuggestMove(this.checkedFields,this.currentPlayerIndex)
-      
-       
+
         this.ApplyMovement(moveSuggest,this.cells[moveSuggest])
       }
 
 
     },
     changePlayerColor:function(currentField){
-     currentField.classList.add(this.playerColors[this.currentPlayerIndex])
+     currentField.classList.add(this.currentPlayer.color)
 
     },
     handleClick:function(e){
+      if (!this.gameState) return
       var currentFieldNumber = Array.prototype.indexOf.call(this.cells,e.target);
       this.ApplyMovement(currentFieldNumber)
     },
@@ -121,45 +142,85 @@ const TicToc={
       if (cellItem.textContent) return
       this.changePlayerColor(cellItem)
       this.checkedFields[cellNumber] =this.currentPlayerIndex
-      console.log(this.checkedFields)
-      cellItem.textContent = this.currentPlayerMark
+      cellItem.textContent = this.currentPlayer.symbol
       //ToDo:use player as class and 
-      let [someOneWin,winner]=this.CheckWin(this.currentPlayerIndex)
+      let [someOneWin,winnerIndex]=this.CheckWin(this.currentPlayerIndex)
       if(someOneWin) {
-        
+        winner=this.players[winnerIndex]
         //#FixMe:It is possible to clear the screen before the end of the game
         setTimeout(()=> {
-          alert(this.currentPlayerMark + ' wons!');
-          this.init(this.gameSize)
+          this.currentPlayer.ShowDetail()
+          alert(`${winner.name}(${winner.symbol})  wons!`);
+          TicToc.Puase
+          players=CreatePlayers()
+          this.init(this.gameSize,players)
           return
   
         },100)
 
       }
-      if(this.CheckTie()){
+      else if(this.CheckTie()){
         alert(' Tie!');
-        this.init(this.gameSize)
+        this.gameSize.Puase
+        this.init(this.gameSize,players)
         return
       }
 
       this.toggleTurn()
 
     },
+    Puase:function(){
+      this.gameState=false
+    },
+    Start:function(){
+      this.gameState=true
+    }
+  
 
 
 }
 gameSize=3
 tableCreate(gameSize)
-const setup=()=>{
-  document.getElementsByClassName("players")[0].style.display = "none";
-  document.getElementById("current-player-info").style.display ="block";
-  
- 
- 
-  TicToc.init(gameSize)
+const CreatePlayers=()=>{
+  let player1=new player("","green","X")
+  let player2=new player("","yellow","O",false)
+  player1.name=document.getElementById("player1").value
+  player2.name=document.getElementById("player2").value
+  player2.isBot=document.getElementById("bot").checked
+  players=[player1,player2]
+  return players
 }
-const reset=()=>{
-  document.getElementsByClassName("players")[0].style.display = "block ";
-  document.getElementById("current-player-info").style.display ="none";
+const setup=()=>{
+
+  if (TicToc.gameState){
+
+    TicToc.Puase()
+    document.getElementsByClassName("players")[0].style.display = "block ";
+    document.getElementById("current-player-info").style.display ="none";
+    document.getElementById("btn-start").value="Start"
+
+
+  }
+  else{
+    document.getElementsByClassName("players")[0].style.display = "none";
+    document.getElementById("current-player-info").style.display ="block";
+    document.getElementById("btn-start").value="Finish"
+    
+    
+    TicToc.Start()
+    
+    players=CreatePlayers()
+    
+    TicToc.init(gameSize,players)
+    TicToc.updateCurrentPlayerName()
+  }
+ 
+}
+const  reset=()=>{
+  TicToc.Start()
+  TicToc.init(gameSize,players)
+  TicToc.updateCurrentPlayerName()
+  
 
 }
+const randomTurn=()=> Math.floor(Math.random() *2) ;
