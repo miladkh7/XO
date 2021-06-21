@@ -81,7 +81,7 @@ const TicToc={
     CheckTie:function(board=this.checkedFields){return board.every(val=>val!=='')},
     init:function(size,players){
       this.players=players
-      this.currentPlayerIndex=0
+      this.currentPlayerIndex=randomTurn()
       this.currentPlayer=players[this.currentPlayerIndex]
         // get fields empty
         this.board=document.getElementsByClassName("board")[0]
@@ -223,3 +223,4 @@ const  reset=()=>{
   
 
 }
+const randomTurn=()=> Math.floor(Math.random() *2) ;
