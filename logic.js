@@ -81,7 +81,8 @@ const TicToc={
     CheckTie:function(board=this.checkedFields){return board.every(val=>val!=='')},
     init:function(size,players){
       this.players=players
-      this.currentPlayer=players[0]
+      this.currentPlayerIndex=0
+      this.currentPlayer=players[this.currentPlayerIndex]
         // get fields empty
         this.board=document.getElementsByClassName("board")[0]
         this.cells=document.getElementsByClassName("cell")
